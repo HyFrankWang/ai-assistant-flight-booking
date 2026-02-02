@@ -2,12 +2,6 @@
 
 A modern AI-powered flight booking assistant using **React + TypeScript** frontend and **Python + LangChain** backend with configurable LLM provider.
 
-## Architecture Diagrams
-
-See [docs/architecture.puml](docs/architecture.puml) for system architecture diagram.
-
-See [docs/c4-diagrams.puml](docs/c4-diagrams.puml) for C4 Context, Container, and Component diagrams.
-
 ## Architecture Overview
 
 ![System Architecture](docs/system_architecture.png)
