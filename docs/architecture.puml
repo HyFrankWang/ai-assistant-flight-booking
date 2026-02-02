@@ -1,0 +1,97 @@
+@startuml Flight Booking AI Assistant Architecture
+!theme plain
+skinparam backgroundColor #ffffff
+skinparam linetype ortho
+skinparam componentStyle uml2
+
+title Flight Booking AI Assistant - System Architecture
+
+' ============ Frontend ============
+package "Frontend (React + TypeScript)" as Frontend #E3F2FD {
+    [App.tsx] as App
+    [ChatInterface] as ChatUI
+    [BookingGrid]
+    [SeatSelector]
+    [api.ts]
+}
+
+' ============ Backend ============
+package "Backend (Python + FastAPI)" as Backend #E8F5E9 {
+    [main.py] as API
+}
+
+' ============ AI Services ============
+package "AI Services (LangChain + LangGraph)" as AIServices #FFF3E0 {
+    [ChatService] as ChatSrv
+    [create_agent] as Agent
+    [InMemorySaver] as Memory
+    [RAG Service] as RAG
+}
+
+' ============ Booking Services ============
+package "Booking Services" as BookingServices #FCE4EC {
+    [BookingService] as BookingSrv
+    [BookingData]
+}
+
+' ============ Data Layer ============
+package "Data Layer" as DataLayer #F5F5F5 {
+    database "Demo Bookings" as BookingsDB
+    file "terms_of_service.txt" as TOS
+    folder "FAISS Index" as FAISS
+}
+
+' ============ External Services ============
+cloud "External Services" as External #E0F7FA {
+    [NVIDIA API] as NVIDIA
+    [OpenAI API] as OpenAI
+}
+
+' ============ Connections ============
+App --> ChatUI : Chat interactions
+App --> BookingGrid : Display bookings
+App --> SeatSelector : Seat selection
+App --> api.ts : REST API calls
+
+api.ts --> API : HTTP requests
+
+API --> ChatSrv : Chat requests
+API --> BookingSrv : Booking CRUD
+
+ChatSrv --> Agent : LLM calls
+Agent --> Memory : Store conversation
+Agent --> RAG : Policy queries
+RAG --> FAISS : Vector search
+
+BookingSrv --> BookingData : Data access
+BookingData --> BookingsDB : In-memory storage
+
+RAG --> TOS : Load documents
+RAG --> FAISS : Store embeddings
+
+Agent --> OpenAI : LLM requests
+Agent --> NVIDIA : LLM requests
+
+note right of API
+  REST Endpoints:
+  - GET  /api/bookings
+  - POST /api/bookings/change
+  - POST /api/bookings/cancel
+  - POST /api/chat/stream
+end note
+
+note bottom of Agent
+  LangChain create_agent with:
+  - get_booking_details tool
+  - change_booking tool
+  - cancel_booking tool
+  - search_rag_policy tool
+end note
+
+note bottom of Memory
+  langgraph.checkpoint.memory
+  InMemorySaver for short-term
+  conversation history
+end note
+
+@enduml

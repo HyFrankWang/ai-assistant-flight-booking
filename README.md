@@ -2,66 +2,15 @@
 
 A modern AI-powered flight booking assistant using **React + TypeScript** frontend and **Python + LangChain** backend with configurable LLM provider.
 
+## Architecture Diagrams
+
+See [docs/architecture.puml](docs/architecture.puml) for system architecture diagram.
+
+See [docs/c4-diagrams.puml](docs/c4-diagrams.puml) for C4 Context, Container, and Component diagrams.
+
 ## Architecture Overview
 
-```
-┌─────────────────────────────────────────────────────────────────────────────────┐
-│                              Frontend (React + TypeScript)                       │
-│  ┌───────────────────────────────────────────────────────────────────────────┐  │
-│  │                        App.tsx (Main Layout)                              │  │
-│  │  ┌────────────────────────┐  ┌────────────────────────────────────────┐  │  │
-│  │  │   ChatInterface        │  │   BookingGrid                          │  │  │
-│  │  │   - Streaming chat     │  │   - Booking display                    │  │  │
-│  │  │   - User messages      │  │   - Status indicators                 │  │  │
-│  │  └────────────────────────┘  └────────────────────────────────────────┘  │  │
-│  │                         ┌────────────────────────┐                       │  │
-│  │                         │   SeatSelector         │                       │  │
-│  │                         │   - Visual seat map    │                       │  │
-│  │                         │   - Seat selection     │                       │  │
-│  │                         └────────────────────────┘                       │  │
-│  └───────────────────────────────────────────────────────────────────────────┘  │
-└─────────────────────────────────────────────────────────────────────────────────┘
-                                    │
-                              REST API (HTTP)
-                                    │
-┌─────────────────────────────────────────────────────────────────────────────────┐
-│                          Backend (Python + FastAPI)                             │
-│  ┌───────────────────────────────────────────────────────────────────────────┐  │
-│  │                            main.py                                        │  │
-│  │  ┌────────────────────────────────────────────────────────────────────┐  │  │
-│  │  │  Endpoints:                                                         │  │  │
-│  │  │  - GET  /api/bookings           → List all bookings               │  │  │
-│  │  │  - POST /api/bookings/change    → Change booking                  │  │  │
-│  │  │  - POST /api/bookings/cancel    → Cancel booking                  │  │  │
-│  │  │  - POST /api/chat/stream        → AI chat streaming               │  │  │
-│  │  └────────────────────────────────────────────────────────────────────┘  │  │
-│  └───────────────────────────────────────────────────────────────────────────┘  │
-│                                    │
-│  ┌───────────────────────────────┐  ┌──────────────────────────────────────────┐ │
-│  │   chat_service.py             │  │   booking_service.py                     │ │
-│  │   - LangChain create_agent    │  │   - Booking CRUD operations              │ │
-│  │   - init_chat_model           │  │   - Business rules validation            │ │
-│  │   - RAG tool integration      │  │   - In-memory database                   │ │
-│  │   - Streaming responses       │  │   - JSON file persistence                │ │
-│  └───────────────────────────────┘  └──────────────────────────────────────────┘ │
-│                                                                                 │
-│  ┌───────────────────────────────┐  ┌──────────────────────────────────────────┐ │
-│  │   tools.py                    │  │   rag_service.py                         │ │
-│  │   - @Tool decorated functions │  │   - FAISS vector store                   │ │
-│  │   - get_booking_details()     │  │   - Terms of service RAG                 │ │
-│  │   - change_booking()          │  │   - OpenAI embeddings                    │ │
-│  │   - cancel_booking()          │  │   - Semantic search                      │ │
-│  │   - search_rag_policy()       │  │                                          │ │
-│  └───────────────────────────────┘  └──────────────────────────────────────────┘ │
-│                                                                                 │
-│  ┌───────────────────────────────┐  ┌──────────────────────────────────────────┐ │
-│  │   config.py                   │  │   models.py                              │ │
-│  │   - Unified LLM config        │  │   - Pydantic data models                 │ │
-│  │   - get_llm_config()          │  │   - Request/response schemas             │ │
-│  │   - Environment variables     │  │                                          │ │
-│  └───────────────────────────────┘  └──────────────────────────────────────────┘ │
-└─────────────────────────────────────────────────────────────────────────────────┘
-```
+![System Architecture](docs/system_architecture.png)
 
 ## Project Structure
 
@@ -267,11 +216,13 @@ The application loads 5 demo bookings on startup:
 
 | Booking # | Customer | Route | Class |
 |-----------|----------|-------|-------|
-| 101 | John Doe | LAX → JFK | Economy |
-| 102 | Jane Smith | SFO → LHR | Premium |
-| 103 | Michael Johnson | JFK → CDG | Business |
-| 104 | Sarah Williams | ARN → HEL | Economy |
-| 105 | Robert Taylor | MUC → FRA | Premium |
+| 101 | Frank Li | Random (LAX/YVR/JFK/LHR/CDG/ARN/HEL/HND/MUC/FRA/MAD/FUN/SJC) | Random |
+| 102 | Danny Smith | Random | Random |
+| 103 | Michael Wu | Random | Random |
+| 104 | Eugenia Williams | Random | Random |
+| 105 | Robert Xiong | Random | Random |
+
+**Note**: Routes and classes are randomly assigned on startup from available airport codes (LAX, YVR, JFK, LHR, CDG, ARN, HEL, HND, MUC, FRA, MAD, FUN, SJC) and booking classes (ECONOMY, PREMIUM_ECONOMY, BUSINESS).
 
 ## Technology Stack
 

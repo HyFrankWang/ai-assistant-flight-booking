@@ -1,0 +1,22 @@
+@startuml Flight Booking AI Assistant - C4 Context Diagram
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Context.puml
+!theme plain
+skinparam backgroundColor #ffffff
+
+title Flight Booking AI Assistant - System Context
+
+Person(customer, "Customer", "Airline passenger seeking booking assistance")
+System_Ext(llm_provider, "LLM Provider", "NVIDIA, OpenAI, etc.")
+
+System_Boundary(flight_booking, "Flight Booking AI Assistant") {
+    System(frontend, "React Frontend", "Chat UI, booking management")
+    System(backend, "FastAPI Backend", "REST API, AI orchestration")
+    System(ai_agent, "LangChain Agent", "AI-powered customer support")
+}
+
+Rel(customer, frontend, "Interacts with")
+Rel(frontend, backend, "HTTP API calls")
+Rel(backend, ai_agent, "Chat requests")
+Rel(ai_agent, llm_provider, "LLM API calls")
+
+@enduml

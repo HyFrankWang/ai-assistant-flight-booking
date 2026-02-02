@@ -1,0 +1,46 @@
+@startuml Flight Booking AI Assistant - Component Diagram
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml
+!theme plain
+skinparam backgroundColor #ffffff
+
+title Flight Booking AI Assistant - Chat Service Components
+
+Package "chat_service.py" {
+    [ChatService] as CS
+    [init_chat_model] as InitLLM
+}
+
+Package "langgraph" {
+    [create_agent] as CreateAgent
+    [InMemorySaver] as Memory
+}
+
+Package "tools" {
+    [get_booking_details] as GetBooking
+    [change_booking] as ChangeBooking
+    [cancel_booking] as CancelBooking
+    [search_rag_policy] as SearchRAG
+}
+
+Package "rag_service" {
+    [RAGService] as RAGSvc
+    [FAISS] as VectorStore
+}
+
+CS --> InitLLM : Initialize LLM
+CS --> CreateAgent : Create agent with tools
+CreateAgent --> Memory : Checkpointer
+CreateAgent --> GetBooking : Tool
+CreateAgent --> ChangeBooking : Tool
+CreateAgent --> CancelBooking : Tool
+CreateAgent --> SearchRAG : Tool
+SearchRAG --> RAGSvc : Search policies
+RAGSvc --> VectorStore : Similarity search
+
+note right of CS
+  - streaming=True
+  - thread_id for memory
+  - stream_mode="updates"
+end note
+
+@enduml

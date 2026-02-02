@@ -1,0 +1,44 @@
+
+@startuml Flight Booking AI Assistant - C4 Container Diagram
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
+!theme plain
+skinparam backgroundColor #ffffff
+
+title Flight Booking AI Assistant - Container Diagram
+
+Person(customer, "Customer", "Airline passenger")
+
+Container_Boundary(frontend, "Frontend Container") {
+    Container(app, "React App", "React 19", "Main UI application")
+    Container(chat_ui, "ChatInterface", "React Component", "Streaming chat UI")
+    Container(booking_grid, "BookingGrid", "React Component", "Booking display")
+    Container(api_client, "api.ts", "TypeScript", "REST API client")
+}
+
+Container_Boundary(backend, "Backend Container") {
+    Container(fastapi, "FastAPI", "Python", "REST API server")
+    Container(chat_svc, "ChatService", "Python", "AI chat orchestration")
+    Container(booking_svc, "BookingService", "Python", "Booking operations")
+    Container(rag_svc, "RAGService", "Python", "Policy retrieval")
+}
+
+ContainerDb(faiss, "FAISS", "Vector Store", "Local vector database for RAG")
+ContainerDb(mem, "InMemorySaver", "Memory", "Conversation history")
+Container_Ext(file, "terms_of_service.txt", "Text File", "RAG knowledge base")
+
+System_Ext(llm, "LLM Provider", "NVIDIA/OpenAI", "Language model API")
+
+Rel(customer, app, "Uses")
+Rel(app, chat_ui, "Renders")
+Rel(app, booking_grid, "Renders")
+Rel(app, api_client, "Calls")
+Rel(api_client, fastapi, "HTTP")
+Rel(fastapi, chat_svc, "Chat requests")
+Rel(fastapi, booking_svc, "Booking requests")
+Rel(chat_svc, rag_svc, "Policy queries")
+Rel(chat_svc, mem, "Store conversation")
+Rel(rag_svc, faiss, "Vector search")
+Rel(rag_svc, file, "Load documents")
+Rel(chat_svc, llm, "LLM calls")
+
+@enduml
