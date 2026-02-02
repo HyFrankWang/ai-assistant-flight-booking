@@ -1,0 +1,21 @@
+# FastAPI and ASGI
+fastapi==0.128.0
+uvicorn[standard]==0.40.0
+python-multipart==0.0.22
+
+# LangChain and AI
+langchain==1.2.7
+langchain-openai==1.1.7
+langchain-community==0.4.1
+langchain-core==1.2.7
+langgraph==1.0.7
+langchain-nvidia-ai-endpoints==1.0.3
+
+# Vector Store
+faiss-cpu==1.8.0
+
+# Configuration
+pydantic==2.12.5
+pydantic-settings==2.12.0
+python-dotenv==1.2.1
+

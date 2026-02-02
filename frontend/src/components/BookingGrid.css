@@ -1,0 +1,303 @@
+.booking-grid-container {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.grid-title {
+  margin: 0 0 12px 0;
+  font-size: 14px;
+  font-weight: 600;
+  color: #333;
+  padding: 0 8px;
+}
+
+.booking-grid {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  background: white;
+}
+
+.grid-header {
+  display: grid;
+  grid-template-columns: 0.8fr 0.9fr 1fr 1fr 0.9fr 0.8fr 0.6fr 0.6fr 0.9fr;
+  background: #f5f5f5;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.header-cell {
+  padding: 10px 8px;
+  font-size: 11px;
+  font-weight: 600;
+  color: #666;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  text-align: center;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.grid-body {
+  flex: 1;
+  overflow: hidden;
+}
+
+.grid-row {
+  display: grid;
+  grid-template-columns: 0.8fr 0.9fr 1fr 1fr 0.9fr 0.8fr 0.6fr 0.6fr 0.9fr;
+  border-bottom: 1px solid #f0f0f0;
+  transition: background 0.2s;
+}
+
+.grid-row:hover {
+  background: #fafafa;
+}
+
+.grid-row.clickable {
+  cursor: pointer;
+}
+
+.grid-row.clickable:hover {
+  background: #e3f2fd;
+}
+
+.grid-row:last-child {
+  border-bottom: none;
+}
+
+.grid-cell {
+  padding: 10px 8px;
+  font-size: 12px;
+  color: #333;
+  text-align: center;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.grid-cell.status-confirmed {
+  color: #4CAF50;
+  font-weight: 500;
+}
+
+.grid-cell.status-cancelled {
+  color: #f44336;
+  font-weight: 500;
+}
+
+.grid-cell.status-completed {
+  color: #9E9E9E;
+  font-weight: 500;
+}
+
+.no-bookings {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100px;
+  color: #999;
+  font-size: 14px;
+}
+
+/* Modal Styles */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  animation: fadeIn 0.2s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.modal-content {
+  background: white;
+  border-radius: 12px;
+  width: 90%;
+  max-width: 480px;
+  max-height: 90vh;
+  overflow: hidden;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+  animation: slideUp 0.3s ease;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px;
+  border-bottom: 1px solid #e0e0e0;
+  background: #fafafa;
+}
+
+.modal-header h3 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+  color: #333;
+}
+
+.modal-close {
+  background: none;
+  border: none;
+  font-size: 28px;
+  color: #999;
+  cursor: pointer;
+  padding: 0;
+  line-height: 1;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: all 0.2s;
+}
+
+.modal-close:hover {
+  background: #f0f0f0;
+  color: #666;
+}
+
+.modal-body {
+  padding: 20px;
+  max-height: 60vh;
+  overflow-y: auto;
+}
+
+.detail-section {
+  margin-bottom: 24px;
+}
+
+.detail-section:last-child {
+  margin-bottom: 0;
+}
+
+.detail-section h4 {
+  margin: 0 0 12px 0;
+  font-size: 13px;
+  font-weight: 600;
+  color: #666;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.detail-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0;
+}
+
+.detail-row:not(:last-child) {
+  border-bottom: 1px solid #f9f9f9;
+}
+
+.detail-label {
+  font-size: 13px;
+  color: #666;
+}
+
+.detail-value {
+  font-size: 14px;
+  font-weight: 500;
+  color: #333;
+}
+
+.ticket-number {
+  font-family: monospace;
+  font-size: 14px;
+  color: #1976d2;
+  letter-spacing: 1px;
+}
+
+.flight-route {
+  font-family: monospace;
+  font-size: 15px;
+  color: #1976d2;
+}
+
+.status-badge {
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.status-badge.status-confirmed {
+  background: #e8f5e9;
+  color: #4CAF50;
+}
+
+.status-badge.status-cancelled {
+  background: #ffebee;
+  color: #f44336;
+}
+
+.status-badge.status-completed {
+  background: #f5f5f5;
+  color: #9E9E9E;
+}
+
+.modal-footer {
+  padding: 16px 20px;
+  border-top: 1px solid #e0e0e0;
+  background: #fafafa;
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+}
+
+.btn {
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+  border: none;
+}
+
+.btn-secondary {
+  background: #e0e0e0;
+  color: #333;
+}
+
+.btn-secondary:hover {
+  background: #d0d0d0;
+}
